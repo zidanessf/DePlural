@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>翻译工具</h1>
+
+<label for="english">English:</label>
+<textarea id="english" name="text" rows="8" cols="50">
+</textarea>
+<input type="button" value="Submit" onclick="submitform()">
+<br><br>
+<label for="chinese">中文:</label>
+<textarea id="chinese" name="chinese" rows="8" cols="50">
+</textarea>
+<br><br>
+<script>
+    function submitform(){
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://localhost:5000/trans", true);
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        xhr.send(JSON.stringify({"text":document.getElementById("english").value}));
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+                document.getElementById("chinese").value = this.responseText; //reset form after AJAX success or do something else
+            }
+        }
+    }
+</script>
+</body>
+</html>
